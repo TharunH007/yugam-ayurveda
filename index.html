@@ -348,14 +348,52 @@ body{margin:0}
 a{color:var(--color-accent-700);text-decoration:none}
 a:hover{color:var(--color-accent-600)}
 @keyframes yg-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* — clinic gallery: uniform tiles instead of a mismatched bento grid, so every
+   photo gets the same frame and object-fit:cover crops it consistently — */
+.yg-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.yg-gallery-tile{position:relative;margin:0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s}
+.yg-gallery-tile:hover{transform:scale(1.015);box-shadow:var(--shadow-lg)}
+.yg-gallery-tile image-slot{display:block;aspect-ratio:4/3}
+.yg-gallery-tile figcaption{position:absolute;inset:auto 0 0 0;padding:28px 14px 12px;background:linear-gradient(to top, rgba(32,30,29,.85), transparent);color:var(--color-neutral-100);font-size:12.5px;pointer-events:none}
+
+/* — mobile nav: hamburger toggle (pure CSS checkbox hack — the runtime
+   strips inline onclick handlers, so no JS involved), hidden on desktop — */
+.yg-menu-checkbox{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.yg-menu-btn{display:none;align-items:center;justify-content:center;width:38px;height:38px;flex:none;border:1px solid var(--color-divider);border-radius:999px;background:transparent;color:var(--color-text);cursor:pointer;padding:0}
+
+@media (max-width: 860px) {
+  .yg-menu-btn{display:inline-flex !important}
+  .yg-header nav{
+    display:none !important;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;
+    gap:2px !important;padding:10px 16px 16px;margin:0 !important;
+    background:var(--color-bg);border-bottom:1px solid var(--color-divider);
+    box-shadow:var(--shadow-md);
+  }
+  .yg-menu-checkbox:checked ~ nav{display:flex !important}
+  .yg-header nav a{padding:12px 14px !important;font-size:15px !important}
+  .yg-header nav a.btn-primary{margin:8px 0 0 !important;justify-content:center}
+
+  section{padding-left:18px !important;padding-right:18px !important}
+  #top{padding-top:32px !important;padding-bottom:28px !important}
+  #top, #doctor > div, #visit > div:first-child{grid-template-columns:1fr !important;gap:28px !important}
+  #top h1{font-size:clamp(30px,9vw,42px) !important}
+  #top > div:last-child{margin-top:8px}
+  h2{font-size:28px !important}
+  .yg-gallery{grid-template-columns:repeat(2,1fr);gap:10px}
+}
+
+@media (max-width: 480px) {
+  .yg-gallery{grid-template-columns:1fr}
+}
 </style>
 </helmet>
 
 <div ref="{{ rootRef }}" style="background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden">
 
-<header style="position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--color-bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-divider)">
+<header class="yg-header" style="position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--color-bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-divider)">
 <div style="max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:28px">
-<a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit">
+<a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;margin-right:auto">
 <span style="width:38px;height:38px;border-radius:999px;background:var(--color-accent-2-500);display:grid;place-items:center;flex:none">
 <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="#f5ead8" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
 </span>
@@ -364,7 +402,11 @@ a:hover{color:var(--color-accent-600)}
 <span style="font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-neutral-700)">Thiruvannamalai</span>
 </span>
 </a>
-<nav style="display:flex;gap:4px;margin-left:auto;align-items:center">
+<input type="checkbox" id="yg-menu-toggle" class="yg-menu-checkbox">
+<label for="yg-menu-toggle" class="yg-menu-btn" aria-label="Open menu">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+</label>
+<nav style="display:flex;gap:4px;align-items:center">
 <a href="#therapies" style="font-size:13.5px;padding:8px 13px;border-radius:999px;color:var(--color-text);transition:background .18s,color .18s" style-hover="background:var(--color-accent-200);color:var(--color-accent-800)">Therapies</a>
 <a href="#panchakarma" style="font-size:13.5px;padding:8px 13px;border-radius:999px;color:var(--color-text);transition:background .18s,color .18s" style-hover="background:var(--color-accent-200);color:var(--color-accent-800)">Panchakarma</a>
 <a href="#doctor" style="font-size:13.5px;padding:8px 13px;border-radius:999px;color:var(--color-text);transition:background .18s,color .18s" style-hover="background:var(--color-accent-200);color:var(--color-accent-800)">The Doctor</a>
@@ -393,7 +435,7 @@ WhatsApp us</a>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:34px;padding-top:26px;border-top:1px solid var(--color-divider)">
 <div><div style="font-family:var(--font-heading);font-size:22px">9 – 2 &nbsp;·&nbsp; 4 – 9</div><div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:3px">Consulting hours, daily</div></div>
-<div><div style="font-family:var(--font-heading);font-size:22px">BAMS · Dip. Acu</div><div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:3px">Reg. No. 5987</div></div>
+<div><div style="font-family:var(--font-heading);font-size:22px">BAMS · Dip. Acu</div><div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-700);margin-top:3px">Qualifications</div></div>
 </div>
 </div>
 <div style="position:relative">
@@ -540,7 +582,6 @@ WhatsApp us</a>
 <div style="display:flex;flex-wrap:wrap;gap:10px">
 <span class="tag tag-outline" style="border-radius:999px;padding:8px 15px;font-size:13px;border:1px solid var(--color-divider)">BAMS</span>
 <span class="tag tag-outline" style="border-radius:999px;padding:8px 15px;font-size:13px;border:1px solid var(--color-divider)">Diploma in Acupuncture</span>
-<span class="tag tag-outline" style="border-radius:999px;padding:8px 15px;font-size:13px;border:1px solid var(--color-divider)">Reg. No. 5987</span>
 </div>
 </div>
 </div>
@@ -579,13 +620,13 @@ WhatsApp us</a>
 <h2 style="font-size:38px;margin:0 0 12px;letter-spacing:-0.015em">A quiet room on Somavarakulam Street</h2>
 <p style="font-size:16.5px;color:var(--color-neutral-800);margin:0">Treatment rooms, the dispensary, and the oils we prepare and keep on hand.</p>
 </div>
-<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:168px;gap:14px">
-<div class="washed" style="grid-column:span 2;grid-row:span 2;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g1" src="images/gallery-treatment-room.webp" shape="rect" placeholder="Treatment room, wide"></image-slot></div>
-<div class="washed" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g2" src="images/gallery-droni.jpg" shape="rect" placeholder="Droni / massage table"></image-slot></div>
-<div class="washed" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g3" src="images/gallery-herbal-oils.jpg" shape="rect" placeholder="Herbal oils on the shelf"></image-slot></div>
-<div class="washed" style="grid-column:span 2;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g4" src="images/gallery-reception.webp" shape="rect" placeholder="Reception / waiting area"></image-slot></div>
-<div class="washed" style="grid-column:span 2;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g5" src="images/gallery-entrance.webp" shape="rect" placeholder="Clinic entrance / signboard"></image-slot></div>
-<div class="washed" style="grid-column:span 2;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s" style-hover="transform:scale(1.015);box-shadow:var(--shadow-lg)"><image-slot id="yg-g6" src="images/gallery-kizhi-prep.webp" shape="rect" placeholder="Preparing a herbal kizhi"></image-slot></div>
+<div class="yg-gallery">
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g1" src="images/gallery-treatment-room.webp" shape="rect" placeholder="Treatment room, wide"></image-slot><figcaption>Treatment room</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g2" src="images/gallery-droni.jpg" shape="rect" placeholder="Droni / massage table"></image-slot><figcaption>Droni / massage table</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g3" src="images/gallery-herbal-oils.jpg" shape="rect" placeholder="Herbal oils on the shelf"></image-slot><figcaption>Herbal oils on the shelf</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g4" src="images/gallery-reception.webp" shape="rect" placeholder="Reception / waiting area"></image-slot><figcaption>Reception / waiting area</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g5" src="images/gallery-entrance.webp" shape="rect" placeholder="Clinic entrance / signboard"></image-slot><figcaption>Clinic entrance</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g6" src="images/gallery-kizhi-prep.webp" shape="rect" placeholder="Preparing a herbal kizhi"></image-slot><figcaption>Preparing a herbal kizhi</figcaption></figure>
 </div>
 </section>
 </sc-if>
@@ -628,7 +669,7 @@ WhatsApp us</a>
 
 <footer style="border-top:1px solid var(--color-divider);padding:34px 28px">
 <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;font-size:13px;color:var(--color-neutral-700)">
-<div>Yugam Ayurveda · Dr. R. Yuvaraj, BAMS, Dip. Acu · Reg. No. 5987</div>
+<div>Yugam Ayurveda · Dr. R. Yuvaraj, BAMS, Dip. Acu</div>
 <div>Thiruvannamalai · 72005 80382</div>
 </div>
 </footer>
