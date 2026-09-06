@@ -355,7 +355,6 @@ a:hover{color:var(--color-accent-600)}
 .yg-gallery-tile{position:relative;margin:0;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .24s,box-shadow .24s}
 .yg-gallery-tile:hover{transform:scale(1.015);box-shadow:var(--shadow-lg)}
 .yg-gallery-tile image-slot{display:block;aspect-ratio:4/3}
-.yg-gallery-tile figcaption{position:absolute;inset:auto 0 0 0;padding:28px 14px 12px;background:linear-gradient(to top, rgba(32,30,29,.85), transparent);color:var(--color-neutral-100);font-size:12.5px;pointer-events:none}
 
 /* — mobile nav: hamburger toggle (pure CSS checkbox hack — the runtime
    strips inline onclick handlers, so no JS involved), hidden on desktop — */
@@ -621,12 +620,11 @@ WhatsApp us</a>
 <p style="font-size:16.5px;color:var(--color-neutral-800);margin:0">Treatment rooms, the dispensary, and the oils we prepare and keep on hand.</p>
 </div>
 <div class="yg-gallery">
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g1" src="images/gallery-treatment-room.webp" shape="rect" placeholder="Treatment room, wide"></image-slot><figcaption>Treatment room</figcaption></figure>
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g2" src="images/gallery-droni.jpg" shape="rect" placeholder="Droni / massage table"></image-slot><figcaption>Droni / massage table</figcaption></figure>
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g3" src="images/gallery-herbal-oils.jpg" shape="rect" placeholder="Herbal oils on the shelf"></image-slot><figcaption>Herbal oils on the shelf</figcaption></figure>
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g4" src="images/gallery-reception.webp" shape="rect" placeholder="Reception / waiting area"></image-slot><figcaption>Reception / waiting area</figcaption></figure>
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g5" src="images/gallery-entrance.webp" shape="rect" placeholder="Clinic entrance / signboard"></image-slot><figcaption>Clinic entrance</figcaption></figure>
-<figure class="washed yg-gallery-tile"><image-slot id="yg-g6" src="images/gallery-kizhi-prep.webp" shape="rect" placeholder="Preparing a herbal kizhi"></image-slot><figcaption>Preparing a herbal kizhi</figcaption></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g2" src="images/gallery-droni.jpg" shape="rect" placeholder="Droni / massage table"></image-slot></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g3" src="images/gallery-herbal-oils.jpg" shape="rect" placeholder="Herbal oils on the shelf"></image-slot></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g4" src="images/gallery-reception.webp" shape="rect" placeholder="Reception / waiting area"></image-slot></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g5" src="images/gallery-entrance.webp" shape="rect" placeholder="Clinic entrance / signboard"></image-slot></figure>
+<figure class="washed yg-gallery-tile"><image-slot id="yg-g6" src="images/gallery-kizhi-prep.webp" shape="rect" placeholder="Preparing a herbal kizhi"></image-slot></figure>
 </div>
 </section>
 </sc-if>
